@@ -1,0 +1,23 @@
+import re
+
+def parse_string(string):
+    pattern = r"'.*?'|-?\d+"
+    matches = re.findall(pattern, string)
+
+    result = []
+    key = None
+    values = []
+
+    for match in matches:
+        if match.startswith("'") and match.endswith("'"):
+            if key is not None and values:
+                result.append((key, values))
+                values = []
+            key = match[1:-1]
+        else:
+            values.append(int(match))
+
+    if key is not None and values:
+        result.append((key, values))
+
+    return result
