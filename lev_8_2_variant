@@ -1,0 +1,12 @@
+import re
+
+def parse_data_string(data_string):
+    result = []
+    pattern = r"@'(\w+)'.*?<\|.*?array\(([-\d\s;]+)\);"
+    matches = re.findall(pattern, data_string)
+    for match in matches:
+        key = match[0]
+        values = [int(value) for value in match[1].split(';') if value.strip() != '']
+        result.append((key, values))
+
+    return result
