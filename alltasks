@@ -1,0 +1,287 @@
+import math
+from ast import literal_eval
+import re
+
+
+def main5_30(x):
+    sum = 0
+    for i in range(0, len(x)):
+        sum += (1 - 22 * (x[len(x) - (i + 1)]) ** 3 - x[len(x) - math.ceil((i + 1) / 4)])
+    return sum
+
+
+def main5_31(y, x, z):
+    sum = 0
+    n = len(y)
+
+    for i in range(0, n):
+        sum += (96 * (y[n - math.ceil((i + 1) / 2)]) ** 3 - x[int(i / 3)] ** 2 - z[i]) ** 5
+    final_res = 95 * sum
+
+    return final_res
+
+
+# 6 задание
+
+def x0_var(x, left, middle, right):
+    if x[0] == 1966:
+        return left
+    if x[0] == 1984:
+        return middle
+    if x[0] == 2004:
+        return right
+
+
+def x1_var(x, left, right):
+    if x[1] == 'NSIS':
+        return left
+    if x[1] == 'OOC':
+        return right
+
+
+def x2_var(x, left, middle, right):
+    if x[2] == 'CSV':
+        return left
+    if x[2] == 'YAML':
+        return middle
+    if x[2] == 'YACC':
+        return right
+
+
+def x3_var(x, left, middle, right):
+    if x[3] == 2011:
+        return left
+    if x[3] == 1998:
+        return middle
+    if x[3] == 1984:
+        return right
+
+
+def x4_var(x, left, middle, right):
+    if x[4] == 'P4':
+        return left
+    if x[4] == 'VALA':
+        return middle
+    if x[4] == 'HCL':
+        return right
+
+
+def main6_30(x):
+    return x0_var(x, x1_var(x, x4_var(x, x2_var(x, 0, 1, 2), 3, 4), x3_var(x, x2_var(x, 5, 6, 7), 8, 9)), 10, 11)
+
+
+from ast import literal_eval
+
+
+# декодирование
+def main7_30(x):
+    a = literal_eval(x)
+    f1 = 'F1', (a & 0b00000000000000000000011111)
+    f2 = 'F2', ((a & 0b00000000000000000111100000) >> 5)
+    f3 = 'F3', ((a & 0b00000001111111111000000000) >> 9)
+    f4 = 'F4', ((a & 0b11111110000000000000000000) >> 19)
+
+    return [f1, f2, f3, f4]
+
+
+# кодирование
+def main7_31(x):
+    l1 = x[0] & 0b1111111111111111111111110
+    l2 = (x[1] & 0b1111111111111111111110001) << 1
+    l3 = (x[2] & 0b1111111111111111000001111) << 4
+    l5 = (x[3] & 0b0000000001111111111111111) << 16
+
+    return l1 + l2 + l3 + l5
+
+
+# кодирование
+def main7_32(x):
+    x0 = literal_eval(x[0])
+    x1 = literal_eval(x[1])
+    x2 = literal_eval(x[2])
+    x3 = literal_eval(x[3])
+    q1 = x0 & 0b11111111111110000000
+    q2 = (x1 & 0b11111100000001111111) << 7
+    q3 = (x2 & 0b11111011111111111111) << 14
+    q4 = (x3 & 0b00000111111111111111) << 15
+
+    return str(q1 + q2 + q3 + q4)
+
+
+# транскодирование
+def main7_34(x):
+    a = int(x)
+    l5 = (a & 0b1111100000000000000000000000000000) >> 29
+    l4 = (a & 0b0000011111111110000000000000000000) << 33 - 28
+    l3 = (a & 0b0000000000000001111111110000000000) << 23 - 18
+    l2 = (a & 0b0000000000000000000000001111111000) << 14 - 9
+    result = l5 + l4 + l3 + l2
+
+    return str(hex(result))
+
+
+import re
+
+
+def main8_30(data_string):
+    # значение =:"ключ"
+    pattern = r'(\w+)\s*=:\s*"(\w+)"'
+
+    matches = re.findall(pattern, data_string)
+
+    data_dict = {}
+    for match in matches:
+        key = match[1]
+        value = match[0]
+        data_dict[key] = value
+
+    return data_dict
+
+
+def main8_32(data_string):
+    # rimaxe_464 <== array( usso_898 ;bete ;tegete;esve )
+    dict_data = {}
+    pattern1 = r'\[\s*(\w+)\s*<==\s*array\s*\(([\s\w\s;]+)\)'
+    matches1 = re.findall(pattern1, data_string)
+
+    for match in matches1:
+        key = match[0]
+        values = [value for value in match[1].replace(" ", "").split(';')]
+        dict_data[key] = values
+
+    print(dict_data)
+
+
+# @"значение" |>@"ключ"
+
+def main8_33(data_string):
+    dict_data = {}
+    pattern = r'@"(\w+)"\s*\|\>\@"(\w+)"'
+    matches = re.findall(pattern, data_string)
+
+    for match in matches:
+        dict_data[match[1]] = match[0]
+
+    print(dict_data)
+
+
+# 'titi'->atge_445
+
+def main8_34(data_string):
+    result = []
+    pattern = r"'(\w+)'\s*->\s*(\w+)"
+    matches = re.findall(pattern, data_string)
+
+    for match in matches:
+        result.append((match[1], match[0]))
+
+    print(result)
+
+
+
+
+# val atzaen <-{ #5192 ;#1520 ; #-9265; #-6588 }
+def main8_36(data_string):
+    dict_data = {}
+    pattern = r'val\s*\`(\w+)\s*<-\s*{([\#\-\d\s;]+)}'
+    matches = re.findall(pattern, data_string)
+    for match in matches:
+        print(match)
+    for match in matches:
+        key = match[0]
+        values = [int(value) for value in match[1].replace(" ", "").replace("#", "").split(";")]
+        dict_data[key] = values
+
+    print(dict_data)
+
+
+# #( gear teered_5 razara_68 ) ==> soarti_230;
+def main8_25(data_string):
+    dict_data = {}
+    pattern = r'\#\(([\s\w]+)\)\s*==>\s*(\w+);'
+    matches = re.findall(pattern, data_string)
+    for match in matches:
+        key = match[1]
+        values = [value for value in match[0][1:-1].split(" ")]
+        dict_data[key] = values
+
+    print(dict_data)
+
+main8_25('do .do decl #( gear teered_5 razara_68 ) ==> soarti_230; .end .do decl#( usanla_127 enqu bezari )==>lelequ_15; .end .do decl#( tivece reso) ==> adi; .end end')
+
+
+class MealyError(Exception):
+    def __init__(self, message):
+        super().__init__(message)
+
+
+class Mealy():
+    def __init__(self):
+        self.state = "A"
+
+    def crack(self):
+        if self.state == "A":
+            self.state = "B"
+            return 0
+        if self.state == "B":
+            self.state = "C"
+            return 1
+        if self.state == "C":
+            self.state = "D"
+            return 2
+        if self.state == "D":
+            self.state = "E"
+            return 4
+        if self.state == "E":
+            self.state = "F"
+            return 6
+        if self.state == "F":
+            self.state = "G"
+            return 8
+        if self.state == "G":
+            self.state = "B"
+            return 9
+        else:
+            raise MealyError("crack")
+
+    def stare(self):
+        if self.state == "C":
+            self.state = "A"
+            return 3
+        if self.state == "D":
+            self.state = "D"
+            return 5
+        if self.state == "E":
+            self.state = "B"
+            return 7
+        else:
+            raise MealyError("stare")
+
+
+def test():
+    o = main()
+    o.crack()  # 0
+    o.crack()  # 1
+    o.crack()  # 2
+    o.stare()  # 5
+    o.crack()  # 4
+    o.crack()  # 6
+    try:
+        o.stare()  # MealyError
+    except MealyError:
+        pass
+    o.crack()  # 8
+    o.crack()  # 9
+    o.crack()  # 1
+    o.crack()  # 2
+    o.crack()  # 4
+    o.stare()  # 7
+    o.crack()  # 1
+    o.stare()  # 3
+
+
+def main():
+    return Mealy()
+
+
+test()
