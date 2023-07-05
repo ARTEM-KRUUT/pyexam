@@ -1,0 +1,23 @@
+import re
+
+def parse_string(input_string):
+    pattern = r'define\s*#\(\s*(?P<arguments>[^)]+)\s*\)\s*==>\s*@"(?P<result>[^"]+)"'
+    matches = re.findall(pattern, input_string)
+
+    parsed_result = []
+    for args, res in matches:
+        arguments = args.split(',')
+        arguments = [arg.strip() for arg in arguments]
+        parsed_result.append((res, arguments))
+
+    return parsed_result
+
+# Пример 1
+input_string_1 = "(({ define #( lequ, maon_567 ) ==>@\"rebiri_81\". }; { define#( usedan_587, aredge , erti , ribile ) ==> @\"celari\".;}))"
+result_1 = parse_string(input_string_1)
+print(result_1)
+
+# Пример 2
+input_string_2 = "(( { define #(bion_610 , arate_576, rira , rati ) ==> @\"laante\". }; { define#( aran_882 ,quma_651 ) ==> @\"tibiin_404\". }; { define#( geon_635, maisbe , sovele, qution ) ==> @\"anreen\". }; ))"
+result_2 = parse_string(input_string_2)
+print(result_2)
